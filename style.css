@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    background-color: #fcac00;
+}
+
+#game-field {
+    margin-top: 30px;
+    box-sizing: border-box;
+    float: left;
+    display: block;
+    margin-left: 200px;
+    width: 620px;
+    height: 620px;
+    background: gray;
+    border: 10px solid black;
+}
+
+.cell {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    color: black;
+    text-align: center;
+    font-size: 120px;
+    line-height: 200px;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#game-menu {
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-left: 20px;
+    width: 300px;
+    height: auto;
+    float: left;
+    border: 5px solid black;
+    padding: 15px;
+    background-color: whitesmoke;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #d6bafc;
+    text-decoration: none;
+    color: black;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.button:hover {
+    background-color: #b37efc;
+}
+
+.green {
+    background-color: green;
+}
+
+.green:hover,
+.green:active {
+    background-color: darkgreen;
+}
+
+.red {
+    background-color: red;
+}
+
+.red:hover,
+.red:active {
+    background-color: darkred;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.yellow:hover,
+.yellow:active {
+    background-color: #ddbd04;
+}
+
+#new-game {
+    display: block;
+    margin-top: 200px;
+    text-align: center;
+}
+
+.menu__h5 {
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.menu__h3 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.menu__h3:after {
+    content: '';
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    width: 150px;
+    height: 2px;
+    background-color: black;
+}

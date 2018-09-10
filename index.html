@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Крестики-Нолики</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+    <div class="wrapper">
+
+
+
+        <div id="game-field">
+            <div class="cell" id="cell-0"></div>
+            <div class="cell" id="cell-1"></div>
+            <div class="cell" id="cell-2"></div>
+            <div class="cell" id="cell-3"></div>
+            <div class="cell" id="cell-4"></div>
+            <div class="cell" id="cell-5"></div>
+            <div class="cell" id="cell-6"></div>
+            <div class="cell" id="cell-7"></div>
+            <div class="cell" id="cell-8"></div>
+        </div>
+        <div id="game-menu">
+
+            <h3 class="menu__h3">
+                Настройки игры
+            </h3>
+
+            <h5 class="menu__h5">
+                Сложность
+            </h5>
+            <a href="#" class="button green" id="dif-min"></a>
+            <a href="#" class="button yellow" id="dif-mid"></a>
+            <a href="#" class="button red" id="dif-max"></a>
+
+
+            <h5 class="menu__h5">
+                Игрок
+            </h5>
+            <a href="#" class="button" id="cross-player"><i class="fas fa-times"></i></a>
+            <a href="#" class="button" id="null-player"><i class="far fa-circle"></i></a>
+
+
+
+            <a href="#" class="button" id='new-game'>
+                Новая игра
+            </a>
+
+        </div>
+    </div>
+</body>
+
+</html>
