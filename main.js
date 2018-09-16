@@ -93,10 +93,6 @@ window.onload = function () {
 // }
 
 function humanMove(index, player) {
-    if (player == 'o' && spot % 2 == 0) {
-        return 6;
-    }
-
     let humanMoveIndex = index;
     if (!isFreeCell(humanMoveIndex)) {
         return -1;
@@ -105,6 +101,12 @@ function humanMove(index, player) {
     field[humanMoveIndex] = player;
     spot++;
     updateScreen();
+
+    if (isWin(field, player)) {
+        alert('Игра окончена! ' + player + ' победили! Поздравляем вас! Начните новую игру');
+        startNewGame();
+        return 1;
+    }
 
     return 0;
 }
