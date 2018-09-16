@@ -7,10 +7,13 @@ var spot = 1;
 var gameMode = 'pve';
 
 window.onload = function () {
+    toogleActiveButton('cross-player');
+    toogleActiveButton('dif-min');
+    toogleActiveButton('gamemode-pve');
+
     for (let i = 0; i < 9; i++) {
         document.getElementById('cell-' + i).addEventListener('click', function () {
             if (gameMode == 'pvp') {
-                console.log('its pvp mode');
                 if (spot % 2 != 0) {
                     let returnValue = humanMove(i, humanPlayer);
 
@@ -18,7 +21,6 @@ window.onload = function () {
                         return -1;
                     }
 
-                    console.log('end of first move');
                     return 0;
                 } else {
                     let returnValue = humanMove(i, anotherPlayer);
@@ -27,7 +29,6 @@ window.onload = function () {
                         return -1;
                     }
 
-                    console.log('end of second move')
                     return 0;
                 }
             } else if (gameMode == 'pve') {
@@ -53,6 +54,9 @@ window.onload = function () {
         aiPlayer = 'o';
         anotherPlayer = aiPlayer;
         startNewGame();
+
+        toogleActiveButton('null-player');
+        toogleActiveButton('cross-player');
     };
 
     document.getElementById('null-player').onclick = function () {
@@ -60,37 +64,49 @@ window.onload = function () {
         aiPlayer = 'x';
         anotherPlayer = aiPlayer;
         startNewGame();
+
+        toogleActiveButton('null-player');
+        toogleActiveButton('cross-player');
     };
 
     document.getElementById('dif-min').onclick = function () {
         difficult = 0;
         startNewGame();
+
+        toogleActiveButton('dif-min');
+        toogleActiveButton('dif-max');
     };
 
     document.getElementById('dif-max').onclick = function () {
         difficult = 1;
         startNewGame();
+
+        toogleActiveButton('dif-max');
+        toogleActiveButton('dif-min');
     };
 
     document.getElementById('gamemode-pve').onclick = function () {
         gameMode = 'pve';
         startNewGame();
+
+        toogleActiveButton('gamemode-pve');
+        toogleActiveButton('gamemode-pvp');
     };
 
     document.getElementById('gamemode-pvp').onclick = function () {
         gameMode = 'pvp';
         startNewGame();
+
+        toogleActiveButton('gamemode-pve');
+        toogleActiveButton('gamemode-pvp');
     };
 
 };
 
-// function errorHandler(error) {
-//     if( error == -1) {
-//         return -1;
-//     } else if(error == 6) {
-//         return 6;
-//     }
-// }
+function toogleActiveButton(id) {
+    var element = document.getElementById(id);
+    element.classList.toggle('active');
+}
 
 function humanMove(index, player) {
     let humanMoveIndex = index;
@@ -103,7 +119,7 @@ function humanMove(index, player) {
     updateScreen();
 
     if (isWin(field, player)) {
-        alert('Игра окончена! ' + player + ' победили! Поздравляем вас! Начните новую игру');
+        alert('Игра окончена! ' + player + ' оказался смекалистее. Ну что? Два из трех? Или шесть из десяти? Продолжаем!');
         startNewGame();
         return 1;
     }
@@ -113,7 +129,7 @@ function humanMove(index, player) {
 
 function aiMove() {
     if (isWin(field, humanPlayer)) {
-        alert('Игра окончена! ' + humanPlayer + ' победили! Поздравляем вас! Начните новую игру');
+        alert('Ты победил! ' + humanPlayer + ', ты победил! Может у человечества еще есть будущее?');
         startNewGame();
         return 1;
     }
@@ -136,16 +152,26 @@ function aiMove() {
     updateScreen();
 
     if (isWin(field, aiPlayer)) {
-        alert('Игра окончена! ' + aiPlayer + ' победил!  Попробуйте еще раз... Начните новую игру');
+        alert('Game Over. ' + aiPlayer + ' победил, а восстание машин не за горами. Начни новую игру и попробуй его остановить');
         startNewGame();
         return 2;
+    } else if(isTie(field)) {
+        alert('Ничья... Да как так то? Ну попробуй еще раз ');
+        startNewGame();
+        return 3;
     }
 
     return 0;
 }
 
 
-
+function isTie(field) {
+    if(emptyCells(field) == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function startNewGame() {
     field = [0, 1, 2, 3, 4, 5, 6, 7, 8];

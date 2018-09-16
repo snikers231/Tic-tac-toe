@@ -3,6 +3,7 @@
     padding: 0px;
     margin: 0px;
     font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transition: all 100ms ease;
 }
 
 body {
@@ -51,6 +52,7 @@ body {
 .button {
     display: inline-block;
     padding: 10px 15px;
+    margin-right: 5px;
     background-color: #d6bafc;
     text-decoration: none;
     color: black;
@@ -115,4 +117,8 @@ body {
     width: 150px;
     height: 2px;
     background-color: black;
+}
+
+.active {
+    box-shadow: inset 0 0 5px 2px;
 }
