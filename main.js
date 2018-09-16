@@ -1,92 +1,153 @@
 var field = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 var humanPlayer = 'x';
+var anotherPlayer = 'o';
 var aiPlayer = 'o';
-var difficult = 1;
+var difficult = 0;
+var spot = 1;
+var gameMode = 'pve';
 
 window.onload = function () {
-
     for (let i = 0; i < 9; i++) {
         document.getElementById('cell-' + i).addEventListener('click', function () {
-            let humanMoveIndex = i;
-            if (!isFreeCell(humanMoveIndex)) {
-                console.log('клетка не свободна');
-                return -1;
-            }
+            if (gameMode == 'pvp') {
+                console.log('its pvp mode');
+                if (spot % 2 != 0) {
+                    let returnValue = humanMove(i, humanPlayer);
 
-            field[humanMoveIndex] = humanPlayer;
-            updateScreen();
-
-            if (isWin(field, humanPlayer)) {
-                alert('Игра окончена! ' + humanPlayer + ' победили! Поздравляем вас! Начните новую игру');
-                startNewGame();
-                return 1;
-            }
-
-            let aiMoveIndex;
-            switch (difficult) {
-                case 0:
-                    aiMoveIndex = getRandomMove(field);
-                    break;
-                case 1:
-                    if (getRandom(10) >= 9) {
-                        aiMoveIndex = getBestMove(field, aiPlayer).index;
-                    } else {
-                        aiMoveIndex = getRandomMove(field);
+                    if (returnValue == -1) {
+                        return -1;
                     }
-                    break;
-                case 2:
-                    aiMoveIndex = getBestMove(field, aiPlayer).index;
-                    break;
 
-                default:
-                    return -5;
-            }
+                    console.log('end of first move');
+                    return 0;
+                } else {
+                    let returnValue = humanMove(i, anotherPlayer);
 
-            field[aiMoveIndex] = aiPlayer;
-            updateScreen();
+                    if (returnValue == -1) {
+                        return -1;
+                    }
 
-            if (isWin(field, aiPlayer)) {
-                alert('Игра окончена! ' + aiPlayer + ' победил!  Попробуйте еще раз... Начните новую игру');
-                startNewGame();
-                return 2;
+                    console.log('end of second move')
+                    return 0;
+                }
+            } else if (gameMode == 'pve') {
+                let returnValue = humanMove(i, humanPlayer);
+
+                if (returnValue == -1) {
+                    return -1;
+                }
+
+                aiMove();
+
+                return 0;
             }
         });
     }
+
+    document.getElementById('new-game').onclick = function () {
+        startNewGame();
+    };
+
+    document.getElementById('cross-player').onclick = function () {
+        humanPlayer = 'x';
+        aiPlayer = 'o';
+        anotherPlayer = aiPlayer;
+        startNewGame();
+    };
+
+    document.getElementById('null-player').onclick = function () {
+        humanPlayer = 'o';
+        aiPlayer = 'x';
+        anotherPlayer = aiPlayer;
+        startNewGame();
+    };
+
+    document.getElementById('dif-min').onclick = function () {
+        difficult = 0;
+        startNewGame();
+    };
+
+    document.getElementById('dif-max').onclick = function () {
+        difficult = 1;
+        startNewGame();
+    };
+
+    document.getElementById('gamemode-pve').onclick = function () {
+        gameMode = 'pve';
+        startNewGame();
+    };
+
+    document.getElementById('gamemode-pvp').onclick = function () {
+        gameMode = 'pvp';
+        startNewGame();
+    };
+
 };
 
-document.getElementById('new-game').onclick = function () {
-    startNewGame();
-};
+// function errorHandler(error) {
+//     if( error == -1) {
+//         return -1;
+//     } else if(error == 6) {
+//         return 6;
+//     }
+// }
 
-document.getElementById('cross-player').onclick = function () {
-    humanPlayer = 'x';
-    aiPlayer = 'o';
-    startNewGame();
-};
+function humanMove(index, player) {
+    if (player == 'o' && spot % 2 == 0) {
+        return 6;
+    }
 
-document.getElementById('null-player').onclick = function () {
-    humanPlayer = 'o';
-    aiPlayer = 'x';
-    startNewGame();
-};
+    let humanMoveIndex = index;
+    if (!isFreeCell(humanMoveIndex)) {
+        return -1;
+    }
 
-document.getElementById('dif-min').onclick = function () {
-    difficult = 0;
-    startNewGame();
-};
+    field[humanMoveIndex] = player;
+    spot++;
+    updateScreen();
 
-document.getElementById('dif-mid').onclick = function () {
-    difficult = 1;
-    startNewGame();
-};
+    return 0;
+}
 
-document.getElementById('dif-max').onclick = function () {
-    difficult = 2;
-    startNewGame();
-};
+function aiMove() {
+    if (isWin(field, humanPlayer)) {
+        alert('Игра окончена! ' + humanPlayer + ' победили! Поздравляем вас! Начните новую игру');
+        startNewGame();
+        return 1;
+    }
+
+    let aiMoveIndex;
+    switch (difficult) {
+        case 0:
+            aiMoveIndex = getRandomMove(field);
+            break;
+        case 1:
+            aiMoveIndex = getBestMove(field, aiPlayer).index;
+            break;
+
+        default:
+            return -5;
+    }
+
+    field[aiMoveIndex] = aiPlayer;
+    spot++;
+    updateScreen();
+
+    if (isWin(field, aiPlayer)) {
+        alert('Игра окончена! ' + aiPlayer + ' победил!  Попробуйте еще раз... Начните новую игру');
+        startNewGame();
+        return 2;
+    }
+
+    return 0;
+}
+
+
+
 
 function startNewGame() {
     field = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    spot = 1;
     updateScreen(field);
 }
 
@@ -193,7 +254,7 @@ function getBestMove(newField, player) {
 
 function getRandomMove(newField) {
     let availableSpots = emptyCells(newField);
-    let randomSpot = availableSpots[getRandom(availableSpots.length-1)];
+    let randomSpot = availableSpots[getRandom(availableSpots.length - 1)];
 
     return randomSpot;
 }
